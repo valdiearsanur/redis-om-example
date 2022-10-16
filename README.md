@@ -7,6 +7,18 @@
 
 If this is your fist development. We encourage you to use NVM by following the steps on https://github.com/nvm-sh/nvm.
 
+### Redis Stack
+
+A redis extension with supported JSON data, time series data, graph and searching feature.
+
+--
+
+For local development using MacOS, follow the steps on https://redis.io/docs/stack/get-started/install/mac-os/. Or if you have installed docker in your machine, run with command below:
+
+```
+docker run -d --name redis-stack-server -p 6379:6379 redis/redis-stack-server:latest
+```
+
 
 ## Frameworks & 3rd party libraries
 
@@ -21,7 +33,7 @@ If this is your fist development. We encourage you to use NVM by following the s
 
 ## Development Guideline
 
-1. Clone this repository `git clone https://github.com/valdiearsanur/contacts-api-bangkit.git`
+1. Clone this repository `git clone https://github.com/valdiearsanur/redis-om-example.git`
 
 1. Install the dependencies `npm install`
 
