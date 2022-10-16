@@ -1,0 +1,201 @@
+openapi: 3.0.0
+info:
+  title: Redis OM and Express Skeleton API
+  description: >
+    A simple sample API that shows assorted ways to use Redis OM for
+    Node.js with an Express applciation.
+  version: 1.0.0
+
+paths:
+  /collaborator:
+    post:
+      tags:
+        - Collaborator
+      description: Creates a new collaborator with the specified attributes
+      summary: Create collaborator
+      operationId: createCollaborator
+      requestBody:
+        description: collaborator
+        required: true
+        content:
+          application/json:
+            schema:
+              title: collaborator
+              allOf:
+                - $ref: "#/components/schemas/collaborator"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/collaborator_id"
+                  - $ref: "#/components/schemas/collaborator"
+
+  /collaborator/{id}:
+    get:
+      tags:
+        - Collaborator
+      description: Gets a specific collaborator by ID
+      summary: Get collaborator
+      operationId: fetchCollaborator
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/collaborator_id"
+                  - $ref: "#/components/schemas/collaborator"
+    put:
+      tags:
+        - Collaborator
+      description: Updates a specific collaborator
+      summary: Update collaborator
+      operationId: updateCollaborator
+      parameters:
+        - $ref: "#/components/parameters/id"
+      requestBody:
+        description: collaborator
+        required: true
+        content:
+          application/json:
+            schema:
+              title: collaborator
+              allOf:
+                - $ref: "#/components/schemas/collaborator"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/collaborator_id"
+                  - $ref: "#/components/schemas/collaborator"
+    delete:
+      tags: 
+         - Collaborator
+      description: Deletes the collaborator by ID
+      summary: Delete collaborator
+      operationId: removeCollaborator
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/collaborator_id"
+
+  /collaborators/all:
+    get:
+      tags:
+        - Search
+      description: Gets all the collaborators
+      summary: Get all collaborators
+      operationId: fetchAllCollaborators
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/collaborators"
+
+  /collaborators/by-project-id/{project_id}:
+    get:
+      tags:
+        - Search
+      description: Gets collaborators by project id
+      summary: Get collaborators by project id
+      operationId: fetchCollaboratorsByProjectId
+      parameters:
+        - $ref: "#/components/parameters/project_id"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/collaborators"
+
+components:
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/id"
+
+    project_id:
+      name: project_id
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/project_id"
+
+  schemas:
+    collaborator_id:
+      type: object
+      properties:
+        entityId:
+          $ref: "#/components/schemas/id"
+
+    collaborators:
+      type: array
+      items:
+        $ref: "#/components/schemas/collaborator"
+
+    collaborator:
+      type: object
+      properties:
+        userId:
+          $ref: "#/components/schemas/user_id"
+        username:
+          $ref: "#/components/schemas/username"
+        userDisplayName:
+          $ref: "#/components/schemas/user_display_name"
+        projectId:
+          $ref: "#/components/schemas/project_id"
+        projectDisplayName:
+          $ref: "#/components/schemas/project_display_name"
+
+    id:
+      description: The ID of the collaborator
+      type: string
+      example: 01FX8N39YVZRCQNAW0R5T53H5T
+
+    user_id:
+      description: The user id of the collaborator
+      type: integer
+      example: 123
+
+    username:
+      description: The username of the collaborator
+      type: string
+      example: sherlock_holmes
+
+    user_display_name:
+      description: The display name of the collaborator
+      type: string
+      example: Sherlock Holmes
+
+    project_id:
+      description: The id of project assigned to the collaborator
+      type: integer
+      example: 456
+
+    project_display_name:
+      description: The name of project assigned to the collaborator
+      type: string
+      example: case one
